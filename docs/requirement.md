@@ -81,6 +81,17 @@ messages.push({ role: "user", content: [tool_result_2] }); // エラー
 messages.push({ role: "user", content: [tool_result_1, tool_result_2] });
 ```
 
+### 連続ツール呼び出しの例
+
+「ORD-002の注文をした顧客は誰ですか？」という質問に対して、Claudeは自律的に以下を実行する。
+
+1. `lookup_order("ORD-002")` → 注文情報（`customer_id: "CUST-017"` を含む）を取得
+2. `get_customer("CUST-017")` → 注文情報内の `customer_id` を使って顧客情報を取得
+
+各ツールは1つのことだけをやる。Claudeが結果を解釈して次のツール呼び出しを判断する。
+
+---
+
 ## ディレクトリ構成
 
 ```
@@ -89,4 +100,40 @@ messages.push({ role: "user", content: [tool_result_1, tool_result_2] });
 ├── tools.ts        # ツールの実装・スキーマ定義・ダミーデータ
 ├── package.json
 └── tsconfig.json
+```
+
+
+```text
+  ユーザー入力
+  「ORD-002の注文をした顧客は誰ですか？」
+          ↓
+  Claude API呼び出し（tools付き）
+          ↓
+  Claudeが判断：「lookup_orderを呼ぼう」
+    → stop_reason: "tool_use"
+    → id: "toolu_abc123", name: "lookup_order", input: { order_id: "ORD-002" }
+          ↓
+  executeTool("lookup_order", { order_id: "ORD-002" })
+          ↓
+  lookupOrder("ORD-002") → 注文情報（customer_id: "CUST-017" が含まれる）
+          ↓
+  tool_result を tool_use_id: "toolu_abc123" と一緒にClaudeに返す
+          ↓
+  Claudeが判断：「次はget_customerを呼ぼう」
+    → stop_reason: "tool_use"
+    → id: "toolu_xyz456", name: "get_customer", input: { customer_id: "CUST-017" }
+          ↓
+  executeTool("get_customer", { customer_id: "CUST-017" })
+          ↓
+  getCustomer("CUST-017") → 顧客情報
+          ↓
+  tool_result を tool_use_id: "toolu_xyz456" と一緒にClaudeに返す
+          ↓
+  Claudeが判断：「情報が揃った、答えを返そう」
+    → stop_reason: "end_turn"
+          ↓
+  「ORD-002の注文をしたのは清水 龍さんです」
+
+  tool_use_id は「どのツール呼び出しへの結果か」をClaudeが照合するために使います。複数の
+  ツールが同時に呼ばれたときに特に重要です。
 ```
