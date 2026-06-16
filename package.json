@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx src/chat.ts",
+    "test": "vitest",
     "check": "biome check --write src/"
   },
   "keywords": [],
@@ -23,7 +24,8 @@
     "dotenv": "^17.4.2",
     "ts-node": "^10.9.2",
     "tsx": "^4.22.4",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.0"
