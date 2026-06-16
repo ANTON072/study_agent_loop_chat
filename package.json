@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx src/chat.ts"
+    "dev": "tsx src/chat.ts",
+    "check": "biome check --write src/"
   },
   "keywords": [],
   "author": "",
@@ -23,5 +24,8 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.0"
   }
 }
