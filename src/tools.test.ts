@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getCustomer, lookupOrder, executeTool } from "./tools";
+import { executeTool, getCustomer, lookupOrder } from "./tools";
 
 describe("getCustomer", () => {
   it("getCustomerにcustomerIdを渡すと、customerオブジェクトが返される", () => {
