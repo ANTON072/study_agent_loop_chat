@@ -20,7 +20,7 @@ export const lookupOrder = (orderId: string) => {
 };
 
 export const executeTool = (
-  toolName: "get_customer" | "lookup_order",
+  toolName: string,
   toolId: string,
   args: Record<string, unknown>,
 ): ToolResult => {
@@ -32,11 +32,14 @@ export const executeTool = (
         content: JSON.stringify(getCustomer(args.customer_id as string)),
       };
     }
-    return {
-      type: "tool_result",
-      tool_use_id: toolId,
-      content: JSON.stringify(lookupOrder(args.order_id as string)),
-    };
+    if (toolName === "lookup_order") {
+      return {
+        type: "tool_result",
+        tool_use_id: toolId,
+        content: JSON.stringify(lookupOrder(args.order_id as string)),
+      };
+    }
+    throw new Error(`tool not found`);
   } catch (error) {
     return {
       type: "tool_result",
