@@ -1,4 +1,4 @@
-import { customers } from "./resources";
+import { customers, orders } from "./resources";
 
 export const getCustomer = (customerId: string) => {
   const customer = customers.find((c) => c.customer_id === customerId);
@@ -8,6 +8,6 @@ export const getCustomer = (customerId: string) => {
   throw new Error(`Customer with ID ${customerId} not found`);
 };
 
-export const lookupOrder = (orderId: string) => {
-  return orderId;
+export const lookupOrder = (customerId: string) => {
+  return orders.filter((o) => o.customer_id === customerId);
 };

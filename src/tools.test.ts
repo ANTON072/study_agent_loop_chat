@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getCustomer } from "./tools";
+import { getCustomer, lookupOrder } from "./tools";
 
 describe("getCustomer", () => {
   it("getCustomerにcustomerIdを渡すと、customerオブジェクトが返される", () => {
@@ -15,5 +15,20 @@ describe("getCustomer", () => {
     expect(() => getCustomer("CUST-999")).toThrow(
       "Customer with ID CUST-999 not found",
     );
+  });
+});
+
+describe("lookupOrder", () => {
+  it("lookupOrderにcustomer_idを渡すと、オーダー配列が返却される", () => {
+    const result = lookupOrder("CUST-003");
+    expect(result).toEqual([
+      {
+        order_id: "ORD-001",
+        customer_id: "CUST-003",
+        item: "ワイヤレスイヤホン",
+        status: "delivered",
+        amount: 12800,
+      },
+    ]);
   });
 });
