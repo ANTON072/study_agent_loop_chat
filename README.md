@@ -1,5 +1,7 @@
 # Claude Chat
 
+https://github.com/user-attachments/assets/828db16c-9690-46f5-9668-201ea1596425
+
 CCA Foundations Lab 01（Customer Support Agent）の学習用プロジェクト。  
 Claude API の tool_use / tool_result・エージェントループ・履歴管理を手を動かして理解することが目的。
 
