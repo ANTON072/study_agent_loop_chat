@@ -53,7 +53,8 @@ export const executeTool = (
 export const tools: Anthropic.Messages.Tool[] = [
   {
     name: "get_customer",
-    description: "カスタマーオブジェクトを引き当てる関数",
+    description:
+      '顧客の名前・連絡先・ステータスなど身元情報を取得する。customer_id は "CUST-XXXX" 形式。注文履歴の取得には lookup_order を使う。',
     input_schema: {
       type: "object",
       properties: {
@@ -64,7 +65,8 @@ export const tools: Anthropic.Messages.Tool[] = [
   },
   {
     name: "lookup_order",
-    description: "オーダーオブジェクトを引き当てる関数",
+    description:
+      '注文の内容・ステータス・日時を取得する。order_id は "ORD-XXXX" 形式。顧客の身元確認には get_customer を使う。',
     input_schema: {
       type: "object",
       properties: {
